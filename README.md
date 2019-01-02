@@ -28,3 +28,10 @@
   - readline 사용법
 - ex17 :
   - exixts 라이브러리로 파일 존재 여부 파악
+  
+## Day 3
+- ex18 :
+  - 기본적인 function과 argument
+- ex19 :
+  - 기본적인 연산자 (+ -, *, /, % ...) 및 비트연산자 (~, &, |, << ... )
+  - boolean 연산자
