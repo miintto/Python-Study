@@ -86,18 +86,24 @@ def area_triangle(triangle):
 
 
 T1 = form_triangle([3, 0, 0], [0, 4, 0], [0, -1, 0])
-T2 = form_triangle([2, 2, 3], [2, 0, 3], [-3, 0, 3])
-print('triangle1 : %r\n' % T1)
-print('triangle2 : %r\n' % T2)
+T2 = form_triangle([2, 2, 3], [2, 0, 5], [-3, 0, 7])
+print('triangle1 : %r' % T1)
+print('triangle2 : %r' % T2)
+print()
 
-light = [1, 1, -1]
+light = [0, 1, -1]
 
+T3 = []
 print('light : ', light)
-print('옯겨진 좌표 : ')
-for point in T2[:-1]:
-	projected_pt = proj_pt(point, light, T1)
-	print('%r -> %r' % (point, projected_pt))
-	print('In triangle: :', is_in_triangle(projected_pt, T1))
+print('삼각형 T1을 T2가 포함된 평면으로 정사영')
+for point in T1[:-1]:
+    projected_pt = proj_pt(point, light, T2)
+    print('%r -> %r' % (point, projected_pt))
+    print('In triangle :', is_in_triangle(projected_pt, T2))
+    T3.append(projected_pt)
 
-
-print(area_triangle(T1))
+T3 = form_triangle(T3[0], T3[1], T3[2])
+print('New Triangle :', T3)
+print('T1 의 넓이 :', area_triangle(T1))
+print('T2 의 넓이 :', area_triangle(T2))
+print('T3 의 넓이 :', area_triangle(T3))
