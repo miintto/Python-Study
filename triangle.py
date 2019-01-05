@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # 2019.01/04
 
+import numpy as np
+
 
 def innr_prd(vec1, vec2):
 	'''
@@ -50,15 +52,52 @@ def proj_pt(point, vec, triangle):
 		return [x, y, z]
 
 
+def is_in_triangle(point, triangle):
+	'''
+	점이 주어진 삼각형 내부인지 외부인지 판별
+	내부이면 True, 외부이면 False
+	'''
+	pt1, pt2, pt3, normal_vec = triangle
 
-T1 = form_triangle([2, 0, 0], [-1, 3, 0], [0, 0, 4])
-T2 = form_triangle([2, 0, 0], [-1, 3, 0], [0, -1, 0])
+	vec1 = [pt1[i]-point[i] for i in range(3)]
+	vec2 = [pt2[i]-point[i] for i in range(3)]
+	vec3 = [pt3[i]-point[i] for i in range(3)]
+
+	prd1 = innr_prd(vec1, vec2)
+	prd2 = innr_prd(vec2, vec3)
+	prd3 = innr_prd(vec3, vec1)
+
+	if (abs(innr_prd(vec1, normal_vec)) > 0.00000001) | (abs(innr_prd(vec2, normal_vec)) > 0.00000001):
+		print('Error : The point is not at the SAME plane')
+		return False
+	elif ((prd1>0) & (prd2>0)) | ((prd2>0) & (prd3>0)) | ((prd3>0) & (prd1>0)):
+		return False
+	else:
+		return True
+
+
+def area_triangle(triangle):
+	pt1, pt2, pt3, normal_vec = triangle
+	vec1 = [pt1[i]-pt2[i] for i in range(3)]
+	vec2 = [pt1[i]-pt3[i] for i in range(3)]
+	crss_prd_vec = [i**2 for i in crss_prd(vec1, vec2)]
+	return np.sqrt(sum(crss_prd_vec))/2
+
+
+
+T1 = form_triangle([3, 0, 0], [0, 4, 0], [0, -1, 0])
+T2 = form_triangle([2, 2, 3], [2, 0, 3], [-3, 0, 3])
 print('triangle1 : %r\n' % T1)
 print('triangle2 : %r\n' % T2)
 
-light = [0, 0, 1]
+light = [1, 1, -1]
 
 print('light : ', light)
 print('옯겨진 좌표 : ')
-for point in T1[:-1]:
-	print(proj_pt(point, light, T2), end = ' ')
+for point in T2[:-1]:
+	projected_pt = proj_pt(point, light, T1)
+	print('%r -> %r' % (point, projected_pt))
+	print('In triangle: :', is_in_triangle(projected_pt, T1))
+
+
+print(area_triangle(T1))
