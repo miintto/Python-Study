@@ -61,3 +61,8 @@
   - 리스트 관련 함수 - pop(), append(), insert(), index(), slicing, len(), del(), join()
   - try, except 문 및 error처리
 
+## Day 6
+- ex_dict :
+  - set 형태 다루기
+  - 튜플 형태 다루기
+  - dictionary 타입 관련
