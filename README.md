@@ -55,3 +55,9 @@
 - HW3_1_Differential : 주어진 다항식을 미분하여 미분계수 계산
 - HW3_2_Sorting : 리스트의 원소를 서로 비교하여 오름차순으로 정렬하고 바꾼 횟수 카운트 (선택정렬, 버블정렬)
 - HW3_3_FindBit_2 : i,j를 입력받아 그 사이 인덱스의 이진법 자릿수 계산
+
+## Day 5
+- ex_list :
+  - 리스트 관련 함수 - pop(), append(), insert(), index(), slicing, len(), del(), join()
+  - try, except 문 및 error처리
+
