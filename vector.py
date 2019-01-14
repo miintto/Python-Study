@@ -12,22 +12,25 @@ class Vec3D:
         self.z = z
 
     def __repr__(self):
-        x = str(self.x)
-        y = str(self.y)
-        z = str(self.z)
-        return '['+x+', '+y+', '+z+']'
+        return '['+str(self.x)+', '+str(self.y)+', '+str(self.z)+']'
 
-    def __add__(self, vec):
-        x = self.x + vec.x
-        y = self.y + vec.y
-        z = self.z + vec.z
-        return Vec3D(x, y, z)
+    def __add__(self, arg):
+        if type(arg) == Vec3D:
+            x = self.x + arg.x
+            y = self.y + arg.y
+            z = self.z + arg.z
+            return Vec3D(x, y, z)
+        else:
+            return Vec3D(self.x+arg, self.y+arg, self.z+arg)
 
-    def __sub__(self, vec):
-        x = self.x - vec.x
-        y = self.y - vec.y
-        z = self.z - vec.z
-        return Vec3D(x, y, z)
+    def __sub__(self, arg):
+        if type(arg) == Vec3D:
+            x = self.x - arg.x
+            y = self.y - arg.y
+            z = self.z - arg.z
+            return Vec3D(x, y, z)
+        else:
+            return Vec3D(self.x-arg, self.y-arg, self.z-arg)
 
     def __mul__(self, arg):
         '''inner product'''
@@ -38,6 +41,12 @@ class Vec3D:
             return x+y+z
         else:
             return Vec3D(self.x*arg, self.y*arg, self.z*arg)
+
+    def __truediv__(self, arg):
+        return Vec3D(self.x/arg, self.y/arg, self.z/arg)
+
+    def __neg__(self):
+        return Vec3D(-self.x, -self.y, -self.z)
 
     def __abs__(self):
         '''2-norm 을 계산'''

@@ -14,22 +14,21 @@ class Triangle():
         self.point1 = point1
         self.point2 = point2
         self.point3 = point3
+        self.points_set = [self.point1, self.point2, self.point3]
         self.set_normal_vector()
 
     def __repr__(self):
-        pt1 = str(self.point1)
-        pt2 = str(self.point2)
-        pt3 = str(self.point3)
+        points_set = str(self.points_set)
         normal_vector = str(self.normal_vector)
-        return '['+pt1+', '+pt2+', '+pt3+'], normal vector = '+normal_vector
+        return points_set+', normal vector = '+normal_vector
 
     def set_normal_vector(self):
         '''
         삼각형이 포함한 평면의 법선벡터를 계산
         '''
-        x = self.point1-self.point2
-        y = self.point1-self.point3
-        self.normal_vector = x.cross(y)
+        vec1 = self.point1-self.point2
+        vec2 = self.point1-self.point3
+        self.normal_vector = vec1.cross(vec2)
 
     def area(self):
         '''
@@ -43,9 +42,7 @@ class Triangle():
         '''
         법선벡터의 방향을 반대로 바꿈
         '''
-        self.normal_vector.x = -self.normal_vector.x
-        self.normal_vector.y = -self.normal_vector.y
-        self.normal_vector.z = -self.normal_vector.z
+        self.normal_vector = -self.normal_vector
 
     def project(self, vector, triangle):
         '''
@@ -57,7 +54,7 @@ class Triangle():
             raise ValueError('정사영시킬 수 없음. (벡터와 평면이 서로 평행)')
         else:
             projected_pt = []
-            for pt in [self.point1, self.point2, self.point3]:
+            for pt in self.points_set:
                 t = (normal_vec_plane*(triangle.point1-pt)) / (normal_vec_plane*vector)
                 projected_pt.append(pt+vector*t)
             return projected_pt
@@ -79,14 +76,33 @@ def is_in_triangle(point, triangle):
     prd3 = vec3*vec1
 
     if (abs(vec1*triangle.normal_vector) > 1.0e-8) | (abs(vec2*triangle.normal_vector) > 1.0e-8):
-        raise ValueError('Error : 해당 점과 삼각형이 동일 평면상에 있지 않음.')
+        raise ValueError('Error : 해당 점과 삼각형이 동일 평면상에 있지 않음.') 
     elif ((prd1>0) & (prd2>0)) | ((prd2>0) & (prd3>0)) | ((prd3>0) & (prd1>0)):
         return False
     else:
         return True
 
+def inter(point1, point2, point3, point4):
+    '''
+    선분 point1 point2와 선분 point3 point4의 교점을 출력
+    '''
+    vec1 = point2-point1
+    vec2 = point4-point3
+    if vec1.x*vec2.y==vec2.x*vec1.y:
+        return None
+    else:
+        t = vec2.cross(point1-point3).z / vec1.cross(vec2).z
+        inter_pt = point1 + vec1*t
+        bool_1 = min(point1.x, point2.x)-1.0e-8 <= inter_pt.x <= max(point1.x, point2.x)+1.0e-8
+        bool_2 = min(point1.y, point2.y)-1.0e-8 <= inter_pt.y <= max(point1.y, point2.y)+1.0e-8
+        bool_3 = min(point3.x, point4.x)-1.0e-8 <= inter_pt.x <= max(point3.x, point4.x)+1.0e-8
+        bool_4 = min(point3.y, point4.y)-1.0e-8 <= inter_pt.y <= max(point3.y, point4.y)+1.0e-8
+        if bool_1 & bool_2 & bool_3 & bool_4:
+            return inter_pt
+        else:
+            return None
 
-
+'''
 T1 = Triangle(Vec3D(3, 0, 0), Vec3D(0, 4, 0), Vec3D(0, -1, 0))
 T2 = Triangle(Vec3D(2, 2, 3), Vec3D(2, 0, 5), Vec3D(-3, 0, 7))
 print('triangle1 :', T1)
@@ -100,3 +116,6 @@ T3 = Triangle(x, y, z)
 print(T3)
 
 print(is_in_triangle(T3.point1, T1))
+
+
+'''
