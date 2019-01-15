@@ -73,4 +73,4 @@
 - ex_all :
   - 클래스 응용 (벡터 계산 및 삼각형 class 제작)
   - if __name__ == '__main__' 용도
-  - class 상솟
+  - class 상속
