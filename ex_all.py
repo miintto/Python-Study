@@ -23,7 +23,7 @@ class Complex:
         y = self.re*z.im + self.im*z.re
         return Complex(x, y)
 
-    def __str__(self):
+    def __str__(self):   ###  ___repr__ 과의 차이점은?
         if self.im < 0:
             sgn = ' - '
             y = -self.im
@@ -41,7 +41,7 @@ class Complex:
             y = self.im
         print(arg, end=' ')
         print(str(self.re)+sgn+str(y)+'i')
-        return self
+        return self   ### show함수에 꼭 return self가 들어갈 필요가 있을까? #1
 
 
 class Vector:
@@ -103,11 +103,22 @@ class MyTriagle(Triangle):   ### 상속 클래스
         v1 = v1_vec.GetVector()
         v2 = v2_vec.GetVector()
         n = n_vec.GetVector()
-        super(MyTriagle, self).__init__(v0, v1, v2, n)  ### 상위 클래스를 불러서 해당 변수를 집어넣어준다.
+        super(MyTriagle, self).__init__(v0, v1, v2, n)
+        ### 상위 클래스를 불러서 해당 변수를 집어넣어준다.
+        ### super()안의 빈칸을 비워놔도 상관없는듯...
 
-
+print('name', __name__=='__main__')
 
 if __name__ == '__main__':
+### 실행한 모듈이 메인 프로그램인지 확인하는 작업
+### 여기서 __name__은 자신을 포함하고 있는 모듈의 이름을 가리킨다.
+### 예를들어 커멘드에서 python3 ex_all.py 를 실행해보면 
+### __name__에는 'ex_all'라는 이름이 메인으로 지정된다.
+### 그래서 __name__=='__main__'는 True라는 값을 반환하게된다.
+
+### 하지만 ex_all_2.py 라는 모듈을 만들어서 ex_all을 import하여 ex_all_2.py를 실행하는 경우에는
+### __name__에는 ex_all_2라는 값이 들어가게 되어
+### __name__=='__main__'는 False 를 반환하게 된다.
     print('It Work')
     a = Complex(1, 2)
     a.show('a = ')
@@ -121,12 +132,14 @@ if __name__ == '__main__':
     y3 = a*b
     y3.show('a * b = ')
     print(y3)
+### 여기까지의 내용은 ex_all을 직접 실행하는 경우에만 실행이 된다.
+### 이런 작업은 debugging때 주로 사용할 수 있다.
 
 
 v1 = Vector(1, 2, 3)
 v1.show('v1 =')
 
-v2 = Vector().SetVector([1, -1, 0]).show('v2 =')
+v2 = Vector().SetVector([1, -1, 0]).show('v2 =')   #1 이렇게 인스턴스를 return받으면 SetVector와 show를 동시에 작성할 수 있다. 함수를 한번에 쭉 이어서 작성할 수 있음
 v3 = Vector().SetVector([1, 1, 0]).show('v3 =')
 v4 = Vector().SetVector([0, 1, -1]).show('v4 =')
 
