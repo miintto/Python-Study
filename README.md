@@ -1,5 +1,5 @@
 # Python Study
-## Day 1
+## Day 1 (2018.12/28)
 - ex01 :
   - 기본적인 print() 함수 사용법
 - ex02 :
@@ -16,7 +16,7 @@
   - 주어진 범위 내에서만 작동하도록
   - 월별 일수 자동맞춤
 
-## Day 2
+## Day 2 (2018.12/31)
 - ex10 :
   - while문 사용법
   - print 옵션에서 '\r' 적용
@@ -29,7 +29,7 @@
 - ex17 :
   - exixts 라이브러리로 파일 존재 여부 파악
   
-## Day 3
+## Day 3 (2019.01/02)
 - ex18 :
   - 기본적인 function과 argument
 - ex19 :
@@ -41,7 +41,7 @@
 - HW2_FindBit :
   - 입력받은 정수를 n+1번 나눗셈을 반복하여 나머지를 출력하는 함수 (find_binary_bit(num, n))
   
-## Day 4
+## Day 4 (2019.01/03)
 - ex20_module :
   - lambda와 function
   - 스트링을 split()
@@ -56,13 +56,21 @@
 - HW3_2_Sorting : 리스트의 원소를 서로 비교하여 오름차순으로 정렬하고 바꾼 횟수 카운트 (선택정렬, 버블정렬)
 - HW3_3_FindBit_2 : i,j를 입력받아 그 사이 인덱스의 이진법 자릿수 계산
 
-## Day 5
+## Day 5 (2019.01/04)
 - ex_list :
   - 리스트 관련 함수 - pop(), append(), insert(), index(), slicing, len(), del(), join()
   - try, except 문 및 error처리
 
-## Day 6
+## Day 6 (2019.01/07)
 - ex_dict :
   - set 형태 다루기
   - 튜플 형태 다루기
   - dictionary 타입 관련
+- ex_class :
+  - 클래스 기초
+  
+## Day 7 (2019.01/14)
+- ex_all :
+  - 클래스 응용 (벡터 계산 및 삼각형 class 제작)
+  - if __name__ == '__main__' 용도
+  - class 상솟
