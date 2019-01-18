@@ -69,10 +69,13 @@
 - ex_class :
   - 클래스 기초
   
-## 2019.01/14~15 (Day 7, 8, 9)
+## 2019.01/14, 15, 17 (Day 7, 8, 9)
 - ex_all :
   - 클래스 응용 (벡터 계산 및 삼각형 class 제작)
   - 특수 method (__add__, __mul__, __str__, ...)
   - if __name__ == '__main__' 용도
   - class 상속 및 오버라이딩
   - format() 함수
+- 웹 프레임워크
+  - 는 걍 [django](https://www.djangoproject.com/)를 쓰는게 편할듯...
+  - 참고 : [Yummy_spam](https://github.com/IC-H/12th_OPEN_SW_DEV_CONF)
