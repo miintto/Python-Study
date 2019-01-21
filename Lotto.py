@@ -62,7 +62,7 @@ for i in range(6):
         N = random.randint(1, 45)
     winnig_numbers.append(N)
 
-    print('%d번째 당첨번호는 : %d' % (i+1, N))
+    print('%d번째 추첨번호는 : %d' % (i+1, N))
     time.sleep(3)
 
 N = random.randint(1, 45)
@@ -75,7 +75,7 @@ time.sleep(3)
 winnig_numbers.sort()
 
 print('\n')
-print('당첨 번호는', end = ' ')
+print('추첨 번호는', end = ' ')
 print(', '.join([str(num) for num in winnig_numbers]), end = ' ')
 print('입니다.')
 time.sleep(2)
@@ -89,8 +89,8 @@ for num1 in user_numbers:
 print()
 print('--------------------------------------------------')
 print('  선택한 번호 : '+', '.join([str(num) for num in user_numbers]))
-print('  당첨 번호   : '+', '.join([str(num) for num in winnig_numbers]))
-print('  맞는 번호   : '+', '.join([str(num) for num in common_numbers]))
+print('  추첨 번호   : '+', '.join([str(num) for num in winnig_numbers]))
+print('  당첨 번호   : '+', '.join([str(num) for num in common_numbers]))
 print('--------------------------------------------------', end='\n\n')
 
 
@@ -103,6 +103,4 @@ elif len(common_numbers)==4:
 elif len(common_numbers)==3:
     print('4등입니다.')
 else:
-	print('아쉽지만 꽝ㅠㅠ')
-
-
+    print('아쉽지만 꽝ㅠㅠ')
