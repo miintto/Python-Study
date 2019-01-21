@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # 2019.01/14 ~ 15
 
+import math
+
 
 class Complex:
     '''Complex Class Definition'''
@@ -56,9 +58,19 @@ class Vector:
         self.dim = cnt
 
     def __str__(self):
-        vec = str(self.vec)
-        vec = vec.replace('[', '< ').replace(']', ' >').replace(',', ' ,')
-        return vec
+        pstr = '<'
+        for vec in self.vec:
+            pstr += ' '
+            pstr += str(vec)
+            pstr += ' '
+        pstr += '>'
+        return pstr
+
+    def show(self, comment = ''):
+        print(comment, end=' ')
+        print(self.vec)
+        print('(dim=%d)' % self.dim)
+        return self
 
     def SetVector(self, src):
         self.dim = len(src)
@@ -68,14 +80,48 @@ class Vector:
     def GetVector(self):
         return self.vec
 
-    def show(self, comment):
-        print(comment, end=' ')
-        print(self.vec)
-        print('(dim=%d)' % self.dim)
-        return self
+    def Coordinate(self, k):
+        if k < self.dim:
+            return self.vec[k]
+        else:
+            return 0
+
+    def Norm(self):
+        d = 0
+        for vec in self.vec:
+            d += vec**2
+        return math.sqrt(d)
+
+    def Scalar(self, scl):
+        v = [scl*vec for vec in self.vec]
+        return Vector().SetVector(v)
+
+    def __add__(self, rvec):
+        v = [vec for vec in self.vec]
+        for i in range(self.dim):
+            v[i] += rvec.Coordinate(i)
+        return Vector().SetVector(v)
+
+    def __sub__(self, rvec):
+        v = [vec for vec in self.vec]
+        for i in range(self.dim):
+            v[i] -= rvec.Coordinate(i)
+        return Vector().SetVector(v)
+
+    def __mul__(self, rvec):
+        only = 3
+        v = [self.Coordinate(i) for i in range(only)]
+        w = [rvec.Coordinate(i) for i in range(only)]
+        vxw = [0 for i in range(only)]
+        for idx in range(only):
+            idx1 = (idx+1) % 3
+            idx2 = (idx+2) % 3
+            vxw[idx] = v[idx1]*w[idx2] - v[idx2]*w[idx1]
+        return Vector().SetVector(vxw)
 
 
 class Triangle:
+    '''Triangle in 3D'''
     def __init__(self, v0=None, v1=None, v2=None, nvec=None):
         self.vertex = {0:v0, 1:v1, 2:v2}
         self.normal = nvec
@@ -87,20 +133,38 @@ class Triangle:
         print('n->', self.normal)
         return self
 
-    def SetVector(self, offset, val):
+    def SetVerTex(self, offset, val):
         try:
             self.vertex[offset] = val.vec
         except ValueError:
             print('No %d-th vertex' % offset)
         return self
 
+    def GetVertex(self, offset):
+        if offset <3:
+            return Vector().SetVector(self.vertex[offset])
+        else:
+            return Vector().SetVector([0, 0, 0])
+
     def SetNormal(self, n=None):
         if n != None:
             self.normal = n
         else:
-            pass
-            #self.normal = Cross()    미완...
+            vec0 = self.GetVertex(0)
+            vec0 = self.GetVertex(1)
+            vec0 = self.GetVertex(2)
+            self.normal = (vec1-vec2)*(vec2-vec0)
         return self
+
+    def GetNormal(self):
+        return self.normal
+
+    def CalArea(self):
+        x0 = self.GetVertex(0)
+        x1 = self.GetVertex(1)
+        x2 = self.GetVertex(2)
+        vxw = (x1-x2)*(x2-x0)
+        return vxw.Norm()/2
 
 
 class MyTriagle(Triangle):   ### 상속 클래스
@@ -111,10 +175,17 @@ class MyTriagle(Triangle):   ### 상속 클래스
         v2 = v2_vec.GetVector()
         n = n_vec.GetVector()
         super(MyTriagle, self).__init__(v0, v1, v2, n)
-            '''
-            상위 클래스를 불러서 해당 변수를 집어넣어준다.
-            super()안의 빈칸을 비워놔도 상관없는듯...
-            '''
+        '''
+        상위 클래스를 불러서 해당 변수를 집어넣어준다.
+        super()안의 빈칸을 비워놔도 상관없는듯...
+        '''
+
+    def SetArea(self):
+        self.area = self.CalArea()
+        return self
+
+    def GetArea(self):
+        return self.area
 
     def SetNormal(self, n1, n2, n3):
         '''
@@ -141,33 +212,30 @@ if __name__ == '__main__':
     __name__에는 ex_all_2라는 값이 들어가게 되어
     __name__=='__main__'는 False 를 반환하게 된다.
     '''
-    print('It Work')
-    a = Complex(1, 2)
-    a.show('a = ')
-    b = Complex(3, 4)
-    b.show('b = ')
+    v1 = Vector(1, 2, 3)
+    v2 = Vector(4, -1, 0)
+    v3 = Vector(0, 0, 1)
+    n = Vector(1, 1, 1)
+    print('v1 =', v1)
+    print('v2 =', v2)
+    print('v3 =', v3)
+    print('n =', n)
 
-    y1 = a.add(b)
-    y2 = a+b
-    y1.show('a add to b : ')
-    y2.show('a + b : ')
-    y3 = a*b
-    y3.show('a * b =')
-    print('a * b =', y3, end='\n\n')
-### 여기까지의 내용은 ex_all을 직접 실행하는 경우에만 실행이 된다.
-### 이런 작업은 debugging때 주로 사용할 수 있다.
+    print('|n| =', n.Norm())
+    w = v1 + v2
+    print('v1 + v2 =', w)
+    w = v1 - v2
+    print('v1 - v2 =', w)
+    w = v1 * v2
+    print('v1 * v2 =', w)
 
+    T1 = Triangle(v1.GetVector(), v2.GetVector(), v3.GetVector(), n.GetVector()).show('T1 :')   
+    #1 이렇게 인스턴스를 return받으면 SetVector와 show를 동시에 작성할 수 있다. 함수를 한번에 쭉 이어서 작성할 수 있음
+    
+    n.SetVector([-1, -1, -1])
 
-v1 = Vector(1, 2, 3)
-v1.show('v1 =')
-print('v1 :', v1)
+    T2 = MyTriagle(v1, v2, v3, n)
+    print('|T2| =', T2.SetArea().GetArea())
 
-v2 = Vector().SetVector([1, -1, 0]).show('v2 =')   #1 이렇게 인스턴스를 return받으면 SetVector와 show를 동시에 작성할 수 있다. 함수를 한번에 쭉 이어서 작성할 수 있음
-v3 = Vector().SetVector([1, 1, 0]).show('v3 =')
-v4 = Vector().SetVector([0, 1, -1]).show('v4 =')
-
-T1 = Triangle(v1.GetVector(), v2.GetVector(), v3.GetVector(), v4.GetVector())
-T1.SetNormal([-1, -2, -3]).show('T1 : ')
-
-T2 = MyTriagle(v1, v2, v3, v4)
-T2.SetNormal(-1, -2, -3).show('T2 : ')
+    ### 여기까지의 내용은 ex_all을 직접 실행하는 경우에만 실행이 된다.
+    ### 이런 작업은 debugging때 주로 사용할 수 있다.
