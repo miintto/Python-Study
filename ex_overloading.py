@@ -6,8 +6,10 @@ import sys
 
 class Contents:
     def __init__(self, cnts = None):
-        if cnts == None: self.data = [];
-        else: self.data = list(cnts);
+        if cnts == None:
+            self.data = [];
+        else:
+            self.data = list(cnts);
 
     def __getitem__(self, offset):
         # self의 offset번째 값을 가져오고 싶을 때 사용
@@ -48,6 +50,7 @@ class Iteration:
         self.start += 1;
         return self.runs[self.start - 1];
 
+
 def f1(x):
     return x;
 
@@ -57,17 +60,30 @@ def f2(x):
 def f3(x):
     return x * x * x;
 
+
+def YieldIter(start, stop):
+    while True:
+        if start < stop:
+            yield start
+            start += 1
+        else:
+            return None
+
+
 if __name__ == '__main__':
 
     X = Contents([2, 4, 8]);
-    print(X[ : 6]);
-    print(X[0 : : 2]); # slice
+    print(X.data)
+    print(X[:6]);
+    print(X[0::2]); # slice
 
-    X[1 : 5] = [10, 20, 30, 40];
-    print(X[ : ]);
+    X[1:5] = [10, 20, 30, 40];
+    print(X[:]);
+    print(X[::-1])
 
     sum = 0;
-    for v in X: sum += v; # sufficient role as an iterator
+    for v in X:  ### in 은 __next__를 불러온다.
+        sum += v; # sufficient role as an iterator
     print(sum);
 
     Y = Iteration(0, 3);
@@ -75,3 +91,6 @@ if __name__ == '__main__':
 
     for fun in Y:
         print(fun(5));
+
+    for i in YieldIter(0, 5):
+        print(i, '번째')
