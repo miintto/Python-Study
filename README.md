@@ -79,3 +79,8 @@
 - 웹 프레임워크
   - 는 걍 [django](https://www.djangoproject.com/)를 쓰는게 편할듯...
   - 참고 : [Yummy_spam](https://github.com/IC-H/12th_OPEN_SW_DEV_CONF)
+
+## 2019.01/21 (Day 10)
+- ex_decorator :
+- ex_drawing :
+- ex_overloading :
