@@ -84,3 +84,12 @@
 - ex_decorator :
 - ex_drawing :
 - ex_overloading :
+
+## 2019.01/23 (Day 11)
+- ex_overloading :
+  - yield 를 이용한 iteration
+  
+## 2019.01/25 (Day 12)
+- MyTriangle
+- MyTriPlot
+  - matplotlib로 3D에서 삼각형 제작 및 출력
